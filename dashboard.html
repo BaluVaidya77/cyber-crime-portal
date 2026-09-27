@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Crime Complaint Management System</title>
+</head>
+<body>
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        background: #020817;
+        color: white;
+    }
+
+    /* ================= CYBER BACKGROUND ================= */
+
+    .cyber-grid {
+        position: fixed;
+        inset: 0;
+        z-index: -5;
+
+        background-image:
+            linear-gradient(
+                rgba(0, 234, 255, 0.07) 1px,
+                transparent 1px
+            ),
+            linear-gradient(
+                90deg,
+                rgba(0, 234, 255, 0.07) 1px,
+                transparent 1px
+            );
+
+        background-size: 45px 45px;
+
+        animation: gridMove 10s linear infinite;
+    }
+
+    @keyframes gridMove {
+
+        from {
+            background-position: 0 0;
+        }
+
+        to {
+            background-position: 0 450px;
+        }
+
+    }
+
+    .glow {
+        position: fixed;
+        width: 350px;
+        height: 350px;
+        border-radius: 50%;
+        filter: blur(100px);
+        opacity: 0.25;
+        z-index: -4;
+    }
+
+    .glow-blue {
+        background: #00eaff;
+        top: -150px;
+        left: -100px;
+    }
+
+    .glow-purple {
+        background: #004cff;
+        bottom: -150px;
+        right: -100px;
+    }
+
+
+    /* ================= HEADER ================= */
+
+    .header {
+        height: 75px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 0 35px;
+
+        background: rgba(3, 15, 29, 0.97);
+
+        border-bottom: 1px solid rgba(0, 234, 255, 0.35);
+
+        box-shadow:
+            0 5px 25px rgba(0, 234, 255, 0.08);
+    }
+
+    .logo {
+        color: #00eaff;
+
+        font-size: 21px;
+
+        font-weight: bold;
+
+        text-shadow:
+            0 0 12px rgba(0, 234, 255, 0.5);
+    }
+
+    .user {
+        color: #a9c5d4;
+
+        font-size: 14px;
+    }
+
+    .user span {
+        color: #00eaff;
+
+        font-weight: bold;
+    }
+
+
+    /* ================= MAIN ================= */
+
+    .main {
+        padding: 35px;
+    }
+
+
+    /* ================= WELCOME ================= */
+
+    .welcome {
+        margin-bottom: 30px;
+    }
+
+    .welcome h1 {
+        font-size: 32px;
+
+        margin-bottom: 8px;
+    }
+
+    .welcome h1 span {
+        color: #00eaff;
+    }
+
+    .welcome p {
+        color: #7894a8;
+
+        font-size: 14px;
+    }
+
+
+    /* ================= STATISTICS CARDS ================= */
+
+    .cards {
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 20px;
+    }
+
+    .card {
+        padding: 25px;
+
+        background:
+            rgba(5, 25, 45, 0.92);
+
+        border:
+            1px solid #1b435a;
+
+        border-radius: 12px;
+
+        transition: 0.3s;
+
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+
+        border-color: #00eaff;
+
+        box-shadow:
+            0 0 25px rgba(0, 234, 255, 0.15);
+    }
+
+    .card-icon {
+        font-size: 30px;
+
+        margin-bottom: 14px;
+    }
+
+    .card h3 {
+        color: #8da9ba;
+
+        font-size: 14px;
+
+        margin-bottom: 10px;
+    }
+
+    .number {
+        color: #00eaff;
+
+        font-size: 36px;
+
+        font-weight: bold;
+    }
+
+
+    /* ================= SECTION TITLE ================= */
+
+    .section-title {
+        margin-top: 40px;
+
+        margin-bottom: 18px;
+
+        color: #00eaff;
+
+        font-size: 21px;
+    }
+
+
+    /* ================= MANAGEMENT MENU ================= */
+
+    .menu {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 18px;
+    }
+
+    .menu a {
+        display: block;
+
+        padding: 23px;
+
+        background:
+            rgba(5, 25, 45, 0.92);
+
+        border:
+            1px solid #1b435a;
+
+        border-radius: 10px;
+
+        color: white;
+
+        text-decoration: none;
+
+        transition: 0.3s;
+    }
+
+    .menu a:hover {
+        border-color: #00eaff;
+
+        background:
+            rgba(0, 234, 255, 0.08);
+
+        transform: translateY(-3px);
+
+        box-shadow:
+            0 0 20px rgba(0, 234, 255, 0.1);
+    }
+
+    .menu-icon {
+        font-size: 30px;
+
+        margin-bottom: 10px;
+    }
+
+    .menu-title {
+        color: #00eaff;
+
+        font-size: 17px;
+
+        font-weight: bold;
+    }
+
+    .menu-text {
+        color: #7894a8;
+
+        font-size: 13px;
+
+        margin-top: 7px;
+
+        line-height: 1.5;
+    }
+
+
+    /* ================= TABLE ================= */
+
+    .table-box {
+        width: 100%;
+
+        overflow-x: auto;
+
+        background:
+            rgba(5, 25, 45, 0.92);
+
+        border:
+            1px solid #1b435a;
+
+        border-radius: 12px;
+
+        padding: 5px;
+    }
+
+    table {
+        width: 100%;
+
+        border-collapse: collapse;
+    }
+
+    th {
+        text-align: left;
+
+        color: #00eaff;
+
+        padding: 16px;
+
+        border-bottom:
+            1px solid #294355;
+
+        font-size: 13px;
+    }
+
+    td {
+        padding: 15px;
+
+        color: #b8ccd8;
+
+        border-bottom:
+            1px solid #183348;
+
+        font-size: 13px;
+    }
+
+    tr:hover {
+        background:
+            rgba(0, 234, 255, 0.04);
+    }
+
+
+    /* ================= STATUS ================= */
+
+    .high,
+    .medium,
+    .low,
+    .pending,
+    .investigation,
+    .resolved {
+
+        display: inline-block;
+
+        padding: 5px 10px;
+
+        border-radius: 20px;
+
+        font-size: 11px;
+
+        font-weight: bold;
+    }
+
+    .high {
+        color: #ff7777;
+
+        background:
+            rgba(255, 50, 50, 0.12);
+    }
+
+    .medium {
+        color: #ffbf5b;
+
+        background:
+            rgba(255, 170, 0, 0.12);
+    }
+
+    .low {
+        color: #55e6a5;
+
+        background:
+            rgba(0, 255, 150, 0.10);
+    }
+
+    .pending {
+        color: #ffbd5a;
+
+        background:
+            rgba(255, 170, 0, 0.12);
+    }
+
+    .investigation {
+        color: #00eaff;
+
+        background:
+            rgba(0, 234, 255, 0.10);
+    }
+
+    .resolved {
+        color: #55e6a5;
+
+        background:
+            rgba(0, 255, 150, 0.10);
+    }
+
+
+    /* ================= SECURITY ALERTS ================= */
+
+    .alerts {
+        display: grid;
+
+        gap: 12px;
+    }
+
+    .alert {
+        padding: 16px;
+
+        border-radius: 8px;
+
+        border: 1px solid;
+    }
+
+    .alert-danger {
+        color: #ff8d8d;
+
+        background:
+            rgba(255, 50, 50, 0.08);
+
+        border-color:
+            rgba(255, 50, 50, 0.3);
+    }
+
+    .alert-warning {
+        color: #ffc56d;
+
+        background:
+            rgba(255, 170, 0, 0.08);
+
+        border-color:
+            rgba(255, 170, 0, 0.3);
+    }
+
+    .alert-success {
+        color: #5de5a3;
+
+        background:
+            rgba(0, 255, 150, 0.08);
+
+        border-color:
+            rgba(0, 255, 150, 0.3);
+    }
+
+
+    /* ================= QUICK ACTIONS ================= */
+
+    .quick-actions {
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 15px;
+    }
+
+    .action-button {
+        text-align: center;
+
+        padding: 17px;
+
+        text-decoration: none;
+
+        color: #d7f8ff;
+
+        background:
+            rgba(5, 25, 45, 0.92);
+
+        border:
+            1px solid #1b435a;
+
+        border-radius: 9px;
+
+        transition: 0.3s;
+
+        font-weight: bold;
+    }
+
+    .action-button:hover {
+        color: #00eaff;
+
+        border-color: #00eaff;
+
+        background:
+            rgba(0, 234, 255, 0.08);
+
+        box-shadow:
+            0 0 15px rgba(0, 234, 255, 0.12);
+    }
+
+
+    /* ================= FOOTER ================= */
+
+    .footer {
+        text-align: center;
+
+        margin-top: 45px;
+
+        padding-bottom: 20px;
+
+        color: #506b7b;
+
+        font-size: 12px;
+    }
+
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 1000px) {
+
+        .cards {
+            grid-template-columns:
+                repeat(2, 1fr);
+        }
+
+        .menu {
+            grid-template-columns:
+                repeat(2, 1fr);
+        }
+
+        .quick-actions {
+            grid-template-columns:
+                repeat(2, 1fr);
+        }
+    }
+
+
+    @media (max-width: 600px) {
+
+        .header {
+            padding: 0 18px;
+        }
+
+        .logo {
+            font-size: 15px;
+        }
+
+        .user {
+            font-size: 12px;
+        }
+
+        .main {
+            padding: 20px;
+        }
+
+        .cards,
+        .menu,
+        .quick-actions {
+            grid-template-columns: 1fr;
+        }
+
+        .welcome h1 {
+            font-size: 25px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+
+            font-size: 11px;
+        }
+    }
+
+</style>
+
+<!-- CYBER BACKGROUND -->
+
+<div class="cyber-grid"></div>
+
+<div class="glow glow-blue"></div>
+
+<div class="glow glow-purple"></div>
+
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <div class="logo">
+        🛡 CYBER CRIME SYSTEM
+    </div>
+
+    <div class="user">
+
+        Welcome,
+
+        <span>
+            {{ user.username }}
+        </span>
+
+    </div>
+
+</header>
+
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+
+    <!-- WELCOME -->
+
+    <div class="welcome">
+
+        <h1>
+            Cyber Crime
+            <span>Dashboard</span>
+        </h1>
+
+        <p>
+            Complaint & Investigation Management System
+        </p>
+
+    </div>
+
+
+
+    <!-- ================= MAIN STATISTICS ================= -->
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                📋
+            </div>
+
+            <h3>
+                Total Complaints
+            </h3>
+
+            <div class="number">
+                24
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                ⏳
+            </div>
+
+            <h3>
+                Pending Complaints
+            </h3>
+
+            <div class="number">
+                8
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                🔍
+            </div>
+
+            <h3>
+                Under Investigation
+            </h3>
+
+            <div class="number">
+                9
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                ✅
+            </div>
+
+            <h3>
+                Resolved Cases
+            </h3>
+
+            <div class="number">
+                7
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= CASE STATISTICS ================= -->
+
+    <h2 class="section-title">
+        📊 Case Statistics
+    </h2>
+
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                🔴
+            </div>
+
+            <h3>
+                High Priority Cases
+            </h3>
+
+            <div class="number">
+                3
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                🟠
+            </div>
+
+            <h3>
+                Medium Priority
+            </h3>
+
+            <div class="number">
+                8
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                🟢
+            </div>
+
+            <h3>
+                Low Priority
+            </h3>
+
+            <div class="number">
+                13
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                👮
+            </div>
+
+            <h3>
+                Active Officers
+            </h3>
+
+            <div class="number">
+                5
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= MANAGEMENT ================= -->
+
+    <h2 class="section-title">
+        🛡 System Management
+    </h2>
+
+
+    <div class="menu">
+
+
+        <a href="/complaints/">
+
+            <div class="menu-icon">
+                📝
+            </div>
+
+            <div class="menu-title">
+                Complaints
+            </div>
+
+            <div class="menu-text">
+                Register and manage cyber crime complaints.
+            </div>
+
+        </a>
+
+
+
+        <a href="/cases/">
+
+            <div class="menu-icon">
+                🔎
+            </div>
+
+            <div class="menu-title">
+                Investigations
+            </div>
+
+            <div class="menu-text">
+                Manage investigation cases and case status.
+            </div>
+
+        </a>
+
+
+
+        <a href="/register/">
+
+            <div class="menu-icon">
+                👤
+            </div>
+
+            <div class="menu-title">
+                Register User
+            </div>
+
+            <div class="menu-text">
+                Create a new user account.
+            </div>
+
+        </a>
+
+
+
+        <a href="/complaints/">
+
+            <div class="menu-icon">
+                📊
+            </div>
+
+            <div class="menu-title">
+                Complaint Status
+            </div>
+
+            <div class="menu-text">
+                Track complaint progress and status.
+            </div>
+
+        </a>
+
+
+
+        <a href="/admin/">
+
+            <div class="menu-icon">
+                ⚙️
+            </div>
+
+            <div class="menu-title">
+                Administration
+            </div>
+
+            <div class="menu-text">
+                Manage users, complaints and system data.
+            </div>
+
+        </a>
+
+
+
+        <a href="/logout/">
+
+            <div class="menu-icon">
+                🚪
+            </div>
+
+            <div class="menu-title">
+                Logout
+            </div>
+
+            <div class="menu-text">
+                Securely logout from the system.
+            </div>
+
+        </a>
+
+
+    </div>
+
+
+
+    <!-- ================= RECENT COMPLAINTS ================= -->
+
+    <h2 class="section-title">
+        🚨 Recent Complaints
+    </h2>
+
+
+    <div class="table-box">
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Complaint ID
+                    </th>
+
+                    <th>
+                        Crime Type
+                    </th>
+
+                    <th>
+                        Priority
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                <tr>
+
+                    <td>
+                        CC-1001
+                    </td>
+
+                    <td>
+                        Online Fraud
+                    </td>
+
+                    <td>
+                        <span class="high">
+                            High
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="pending">
+                            Pending
+                        </span>
+                    </td>
+
+                    <td>
+                        02 Sep 2026
+                    </td>
+
+                </tr>
+
+
+
+                <tr>
+
+                    <td>
+                        CC-1002
+                    </td>
+
+                    <td>
+                        Phishing
+                    </td>
+
+                    <td>
+                        <span class="medium">
+                            Medium
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="investigation">
+                            Investigation
+                        </span>
+                    </td>
+
+                    <td>
+                        01 Sep 2026
+                    </td>
+
+                </tr>
+
+
+
+                <tr>
+
+                    <td>
+                        CC-1003
+                    </td>
+
+                    <td>
+                        Identity Theft
+                    </td>
+
+                    <td>
+                        <span class="high">
+                            High
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="resolved">
+                            Resolved
+                        </span>
+                    </td>
+
+                    <td>
+                        31 Aug 2026
+                    </td>
+
+                </tr>
+
+
+
+                <tr>
+
+                    <td>
+                        CC-1004
+                    </td>
+
+                    <td>
+                        Cyber Harassment
+                    </td>
+
+                    <td>
+                        <span class="low">
+                            Low
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="pending">
+                            Pending
+                        </span>
+                    </td>
+
+                    <td>
+                        30 Aug 2026
+                    </td>
+
+                </tr>
+
+
+            </tbody>
+
+        </table>
+
+
+    </div>
+
+
+
+    <!-- ================= SECURITY ALERTS ================= -->
+
+    <h2 class="section-title">
+        🛡️ Security Alerts
+    </h2>
+
+
+    <div class="alerts">
+
+
+        <div class="alert alert-danger">
+
+            <strong>
+                ⚠ High Priority:
+            </strong>
+
+            3 complaints require immediate investigation.
+
+        </div>
+
+
+
+        <div class="alert alert-warning">
+
+            <strong>
+                ⚠ Pending:
+            </strong>
+
+            8 complaints are waiting for officer assignment.
+
+        </div>
+
+
+
+        <div class="alert alert-success">
+
+            <strong>
+                ✓ System Secure:
+            </strong>
+
+            No critical system alerts detected.
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= QUICK ACTIONS ================= -->
+
+    <h2 class="section-title">
+        ⚡ Quick Actions
+    </h2>
+
+
+    <div class="quick-actions">
+
+
+        <a
+            href="/complaints/"
+            class="action-button"
+        >
+            📝 New Complaint
+        </a>
+
+
+        <a
+            href="/complaints/"
+            class="action-button"
+        >
+            📋 View Complaints
+        </a>
+
+
+        <a
+            href="/cases/"
+            class="action-button"
+        >
+            🔍 Investigation Cases
+        </a>
+
+
+        <a
+            href="/admin/"
+            class="action-button"
+        >
+            ⚙️ Admin Panel
+        </a>
+
+
+    </div>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="footer">
+
+        Cyber Crime Complaint Management System
+
+        <br>
+
+        © 2026 | Secure Investigation Platform
+
+    </div>
+
+
+</main>
+
+</body>
+</html>
